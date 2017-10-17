@@ -8,16 +8,16 @@ template <typename T> class stack
 {
 public:
 	stack();
-	~stack() noexcept;;
+	~stack() noexcept;
 	stack(const stack&);
-	stack<T>& operator=(const stack<T>& other) noexcept;
+	stack<T> & operator=( stack<T> & const other) noexcept;
 	size_t count() const noexcept;
 	void push(T const &);
 	T pop();
 	void print() const noexcept;
-	T printlast() const;
+	T printlast() const noexcept;
 	bool isempty() const noexcept;
-	
+
 private:
 	T * array_;
 	size_t array_size_;
@@ -27,7 +27,7 @@ private:
 
 
 template<typename T>
-stack<T>::stack() 
+stack<T>::stack()
 {
 	count_ = 0;
 	array_size_ = 0;
@@ -35,7 +35,7 @@ stack<T>::stack()
 }
 
 template<typename T>
-stack<T>::~stack()
+stack<T>::~stack() noexcept
 {
 	count_ = 0;
 	array_size_ = 0;
@@ -46,12 +46,12 @@ stack<T>::stack(const stack<T>& other)
 {
 	array_size_ = other.array_size_;
 	count_ = other.count_;
-	array_=new T[count_];
+	array_ = new T[count_];
 	std::copy(other.array_, other.array_ + other.count_, array_);
 }
 
 template <typename T>
-bool stack<T>::isempty() noexcept
+bool stack<T>::isempty() const noexcept 
 {
 	return (count_ == 0);
 }
@@ -66,23 +66,25 @@ void stack<T>::swap(stack<T>& other)
 }
 
 template<typename T>
-stack<T>& stack<T>::operator= (stack<T>& const other)
+stack<T>& stack<T>::operator= (stack<T>& const other) noexcept
 {
 	if (&other != this)
 		stack(other).swap(*this);
 	return *this;
 }
+
 template<typename T>
-void stack<T>::print() const
+void stack<T>::print() const noexcept
 {
 	if (isempty()) std::cout << "Stack is empty" << std::endl;
 	else
-	for(int i=0; i < count_ ; i++)
-	std::cout<< array_[i] << ' ';
+		for (int i = 0; i < count_; i++)
+			std::cout << array_[i] << ' ';
 	std::cout << std::endl;
 }
+
 template<typename T>
-T stack<T>::printlast()const
+T stack<T>::printlast() const noexcept
 {
 	if (isempty())
 		throw std::logic_error("Stack is empty");
@@ -90,15 +92,15 @@ T stack<T>::printlast()const
 }
 
 template<typename T>
-size_t stack<T>::count() const
+size_t stack<T>::count() const noexcept
 {
 	return count_;
 }
 
 template<typename T>
-T stack<T>::pop() 
+T stack<T>::pop()
 {
-	if (isempty()) 	
+	if (isempty())
 		throw std::logic_error("Stack is empty");
 	else
 	{
@@ -118,7 +120,7 @@ void stack<T>::push(T const & value)
 	else if (array_size_ == count_)
 	{
 		array_size_ = array_size_ * 2;
-		T *ptr=new T[array_size_]();
+		T *ptr = new T[array_size_]();
 		std::copy(array_, array_ + count_, ptr);
 		delete[] array_;
 		array_ = ptr;
