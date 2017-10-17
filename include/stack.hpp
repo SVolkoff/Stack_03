@@ -16,7 +16,7 @@ public:
 	void push(T const &);
 	void pop();
 	T top() const;
-	void print() const noexcept;
+	void print() const;
 	T printlast() const noexcept;
 	bool isempty() const noexcept;
 
@@ -89,7 +89,7 @@ void stack<T>::print() const noexcept
 }
 
 template<typename T>
-T stack<T>::printlast() const noexcept
+T stack<T>::printlast() const
 {
 	if (isempty())
 		throw std::logic_error("Stack is empty");
