@@ -8,14 +8,15 @@ template <typename T> class stack
 {
 public:
 	stack();
-	~stack();
+	~stack() noexcept;;
 	stack(const stack&);
-	stack<T>& operator=(const stack<T>& other);
-	size_t count() const;
+	stack<T>& operator=(const stack<T>& other) noexcept;
+	size_t count() const noexcept;
 	void push(T const &);
 	T pop();
-	void print() const;
+	void print() const noexcept;
 	T printlast() const;
+	bool isempty() const noexcept;
 	
 private:
 	T * array_;
@@ -50,6 +51,13 @@ stack<T>::stack(const stack<T>& other)
 }
 
 template <typename T>
+bool stack<T>::isempty() noexcept
+{
+	return (count_ == 0);
+}
+
+
+template <typename T>
 void stack<T>::swap(stack<T>& other)
 {
 	std::swap(other.array_size_, array_size_);
@@ -58,24 +66,16 @@ void stack<T>::swap(stack<T>& other)
 }
 
 template<typename T>
-stack<T>& stack<T>::operator=(const stack<T>& other) {
-	if (this != &other) 
-	{
-		if (array_size_ != 0) 
-		{
-			delete[] array_;
-		}
-		array_size_ = other.array_size_;
-		count_ = other.count_;
-		array_=new T[count_];
-		std::copy(other.array_, other.array_ + other.count_, array_);
-	}
+stack<T>& stack<T>::operator= (stack<T>& const other)
+{
+	if (&other != this)
+		stack(other).swap(*this);
 	return *this;
 }
 template<typename T>
 void stack<T>::print() const
 {
-	if (count_ == 0) std::cout << "Stack is empty" << std::endl;
+	if (isempty()) std::cout << "Stack is empty" << std::endl;
 	else
 	for(int i=0; i < count_ ; i++)
 	std::cout<< array_[i] << ' ';
@@ -84,7 +84,7 @@ void stack<T>::print() const
 template<typename T>
 T stack<T>::printlast()const
 {
-	if (count_ == 0)
+	if (isempty())
 		throw std::logic_error("Stack is empty");
 	else return array_[count_ - 1];
 }
@@ -98,13 +98,13 @@ size_t stack<T>::count() const
 template<typename T>
 T stack<T>::pop() 
 {
-	if (array_size_ != 0) 
+	if (isempty()) 	
+		throw std::logic_error("Stack is empty");
+	else
 	{
 		count_--;
 		return array_[count_];
 	}
-	else 
-		throw std::logic_error("Stack is empty");
 }
 
 template<typename T>
