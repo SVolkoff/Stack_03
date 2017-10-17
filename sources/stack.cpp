@@ -31,20 +31,18 @@ int main()
 			}
 			else 
 			{
-				std::cout << st.pop() << std::endl;
-			}
-			break;
-
-		case'=':
-			if (st.isempty())
-			{
-				std::cout << "Stack is empty" << std::endl;
-			}
-			else 
-			{
 				std::cout << st.top() << std::endl;
 				st.pop();
 			}
+
+		case'=':
+ 			if (st.isempty())
+  			{
+  				std::cout << "Stack is empty" << std::endl;
+  			}
+  			else 
+ 				st.print();
+ 			break;
 
 		case'?':
 			if (st.isempty()) 
@@ -53,13 +51,12 @@ int main()
 			}
 			else
 			{
-				val = st.pop();
+				val = st.top();
 				std::cout << val << std::endl;
-				st.push(val);
 			}
 			break;
 
-		case'z':
+		case'e':
 			std::getchar();
 			return 0;
 			break;
