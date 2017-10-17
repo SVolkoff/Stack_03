@@ -9,8 +9,9 @@ template <typename T> class stack
 public:
 	stack();
 	~stack() noexcept;
-	stack(const stack&);
-	stack<T> & operator=( stack<T> & const other) noexcept;
+	stack(const stack &);
+	stack<T> & operator=( stack<T> const & other) noexcept;
+	
 	size_t count() const noexcept;
 	void push(T const &);
 	void pop();
@@ -23,7 +24,7 @@ private:
 	T * array_;
 	size_t array_size_;
 	size_t count_;
-	void swap(stack<T>&);
+	void swap(stack<T>&) noexcept;
 };
 
 
@@ -59,7 +60,7 @@ bool stack<T>::isempty() const noexcept
 
 
 template <typename T>
-void stack<T>::swap(stack<T>& other)
+void stack<T>::swap(stack<T> & other) noexcept
 {
 	std::swap(other.array_size_, array_size_);
 	std::swap(count_, other.count_);
@@ -67,7 +68,7 @@ void stack<T>::swap(stack<T>& other)
 }
 
 template<typename T>
-stack<T>& stack<T>::operator= (stack<T>& const other) noexcept
+stack<T>& stack<T>::operator= (stack<T> const & other) noexcept
 {
 	if (&other != this)
 	{
