@@ -70,7 +70,10 @@ template<typename T>
 stack<T>& stack<T>::operator= (stack<T>& const other) noexcept
 {
 	if (&other != this)
-		stack(other).swap(*this);
+	{
+		stack tmp(other);
+		swap(tmp);
+	}
 	return *this;
 }
 
