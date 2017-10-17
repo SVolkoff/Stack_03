@@ -16,8 +16,7 @@ public:
 	void push(T const &);
 	void pop();
 	T top() const;
-	void print() const;
-	T printlast() const noexcept;
+	void print() const noexcept;
 	bool isempty() const noexcept;
 
 private:
@@ -86,14 +85,6 @@ void stack<T>::print() const noexcept
 		for (int i = 0; i < count_; i++)
 			std::cout << array_[i] << ' ';
 	std::cout << std::endl;
-}
-
-template<typename T>
-T stack<T>::printlast() const
-{
-	if (isempty())
-		throw std::logic_error("Stack is empty");
-	else return array_[count_ - 1];
 }
 
 template<typename T>
