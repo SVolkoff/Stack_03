@@ -13,7 +13,8 @@ public:
 	stack<T> & operator=( stack<T> & const other) noexcept;
 	size_t count() const noexcept;
 	void push(T const &);
-	T pop();
+	void pop();
+	T top() const;
 	void print() const noexcept;
 	T printlast() const noexcept;
 	bool isempty() const noexcept;
@@ -97,17 +98,27 @@ size_t stack<T>::count() const noexcept
 	return count_;
 }
 
-template<typename T>
-T stack<T>::pop()
+template <typename T>
+void stack<T>::pop()
 {
 	if (isempty())
-		throw std::logic_error("Stack is empty");
-	else
 	{
-		count_--;
-		return array_[count_];
+		throw "Stack is empty!";
 	}
+
+	count_--;
 }
+template <typename T>
+T stack<T>::top() const
+{
+	if (isempty())
+	{
+		throw "Stack is empty!";
+	}
+
+	return array_[count_ - 1];
+}
+
 
 template<typename T>
 void stack<T>::push(T const & value)
@@ -127,4 +138,5 @@ void stack<T>::push(T const & value)
 	}
 	array_[count_++] = value;
 }
+
 #endif 
