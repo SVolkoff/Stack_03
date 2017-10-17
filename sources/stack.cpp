@@ -25,7 +25,7 @@ int main()
 				break;
 
 		case'-':
-			if (st.count()==0)
+			if (st.isempty())
 			{
 				std::cout << "Stack is empty" << std::endl;
 			}
@@ -36,18 +36,18 @@ int main()
 			break;
 
 		case'=':
-			if (!st.count()) 
+			if (st.isempty())
 			{
 				std::cout << "Stack is empty" << std::endl;
 			}
 			else 
 			{
-				st.print();
+				std::cout << st.top() << std::endl;
+				st.pop();
 			}
-			break;
 
 		case'?':
-			if (st.count()==0) 
+			if (st.isempty()) 
 			{
 				std::cout << "Stack is empty" << std::endl;
 			}
