@@ -9,13 +9,12 @@ template <typename T> class stack
 public:
 	stack() noexcept;
 	~stack() noexcept;
-	stack(const stack &)basic;
+	stack(const stack &);
 	stack<T> & operator=( stack<T> const & other) noexcept;
-	
 	size_t count() const noexcept;
-	void push(T const &) basic;
-	void pop() strong; 
-	T top() const strong;
+	void push(T const &);
+	void pop(); 
+	T top() const ;
 	void print() const noexcept;
 	bool isempty() const noexcept;
 
@@ -43,7 +42,7 @@ stack<T>::~stack() noexcept
 	delete[] array_;
 }
 template<typename T>
-stack<T>::stack(const stack<T>& other) basic 
+stack<T>::stack(const stack<T>& other)
 {
 	array_size_ = other.array_size_;
 	count_ = other.count_;
@@ -94,7 +93,7 @@ size_t stack<T>::count() const noexcept
 }
 
 template <typename T>
-void stack<T>::pop() strong
+void stack<T>::pop()
 {
 	if (isempty())
 	{
@@ -104,7 +103,7 @@ void stack<T>::pop() strong
 	count_--;
 }
 template <typename T>
-T stack<T>::top() const strong 
+T stack<T>::top() const
 {
 	if (isempty())
 	{
@@ -116,7 +115,7 @@ T stack<T>::top() const strong
 
 
 template<typename T>
-void stack<T>::push(T const & value) basic 
+void stack<T>::push(T const & value) 
 {
 	if (array_size_ == 0)
 	{
