@@ -48,7 +48,7 @@ stack<T>::stack(const stack<T>& other)
 	size_t count_tmp = other.count_;
 	array_ = new T[count_tmp];
 	std::copy(other.array_, other.array_ + other.count_, array_);
-	array_size=ar_size;
+	array_size_=ar_size;
 	count_=count_tmp;
 }
 
