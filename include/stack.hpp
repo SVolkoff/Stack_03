@@ -10,7 +10,7 @@ public:
 	stack();
 	~stack() noexcept;
 	stack(const stack &); //strong
-	stack<T> & operator=( stack<T> const & other) //strong
+	stack<T> & operator=( stack<T> const & other); //strong
 	size_t count() const noexcept;
 	void push(T const &); //strong
 	void pop(); //strong
