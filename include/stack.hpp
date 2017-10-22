@@ -7,15 +7,15 @@
 template <typename T> class stack
 {
 public:
-	stack();
+	stack() noexcept;
 	~stack() noexcept;
-	stack(const stack &); //strong
-	stack<T> & operator=( stack<T> const & other); //strong
+	stack(const stack &); //basic
+	stack<T> & operator=(stack<T> const & other); //strong
 	size_t count() const noexcept;
 	void push(T const &); //strong
 	void pop(); //strong
 	T top() const; //strong
-	void print() const ;
+	void print() const;
 	bool isempty() const noexcept;
 
 private:
@@ -27,7 +27,7 @@ private:
 
 
 template<typename T>
-stack<T>::stack() 
+stack<T>::stack() noexcept
 {
 	count_ = 0;
 	array_size_ = 0;
@@ -44,15 +44,14 @@ stack<T>::~stack() noexcept
 template<typename T>
 stack<T>::stack(const stack<T>& other)
 {
-	stack<T> tmp =new stack<T>;
-	tmp.array_size_ = other.array_size_;
-	tmp.count_ = other.count_;
-	tmp.array_ = new T[count_];
-	swap(tmp);
+	array_size_ = other.array_size_;
+	count_ = other.count_;
+	array_ = new T[array_size_];
+	std::copy(other.array_, other.array_ + other.array_size_, array_);
 }
 
 template <typename T>
-bool stack<T>::isempty() const noexcept 
+bool stack<T>::isempty() const noexcept
 {
 	return (count_ == 0);
 }
@@ -69,10 +68,9 @@ void stack<T>::swap(stack<T> & other) noexcept
 template<typename T>
 stack<T>& stack<T>::operator= (stack<T> const & other)
 {
-	if (&other != this)
+	if(&other != this)
 	{
-		stack tmp(other);
-		swap(tmp);
+		stack(other).swap(*this);
 	}
 	return *this;
 }
@@ -98,7 +96,7 @@ void stack<T>::pop()
 {
 	if (isempty())
 	{
-		throw std::logic_error( "Stack is empty!");
+		throw std::logic_error("Stack is empty!");
 	}
 
 	count_--;
@@ -108,7 +106,7 @@ T stack<T>::top() const
 {
 	if (isempty())
 	{
-		throw std::logic_error( "Stack is empty!");
+		throw std::logic_error("Stack is empty!");
 	}
 
 	return array_[count_ - 1];
@@ -116,14 +114,14 @@ T stack<T>::top() const
 template<typename T>
 void stack<T>::push(T const & value) //strong
 {
-	
+
 	if (array_size_ == count_)
 	{
 		size_t ar_size;
 		if (array_size_ == 0)
-		ar_size = 1;
+			ar_size = 1;
 		else
-		ar_size = array_size_ * 2;
+			ar_size = array_size_ * 2;
 		T *ptr = new T[ar_size];
 		std::copy(array_, array_ + count_, ptr);
 		array_size_ = ar_size;
@@ -133,5 +131,4 @@ void stack<T>::push(T const & value) //strong
 	array_[count_] = value;
 	count_++;
 }
-
 #endif 
