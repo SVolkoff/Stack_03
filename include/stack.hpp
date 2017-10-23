@@ -10,9 +10,9 @@ public:
 	stack() noexcept;
 	~stack() noexcept;
 	stack(const stack &); //basic
-	stack<T> & operator=(stack<T> const & other); //strong
+	stack<T> & operator=(stack<T> const & other); //basic
 	size_t count() const noexcept;
-	void push(T const &); //strong
+	void push(T const &); //basic
 	void pop(); //strong
 	T top() const; //strong
 	void print() const;
