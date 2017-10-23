@@ -12,7 +12,7 @@ public:
 	stack(const stack &); /*no safety*/
 	stack<T> & operator=(stack<T> const & other); /*no safety*/
 	size_t count() const noexcept;
-	void push(T const &); //basic
+	void push(T const &); /*no safety*/
 	void pop(); //strong
 	T top() const; //strong
 	void print() const; /*no safety*/
@@ -112,7 +112,7 @@ T stack<T>::top() const
 	return array_[count_ - 1];
 }
 template<typename T>
-void stack<T>::push(T const & value) //strong
+void stack<T>::push(T const & value) 
 {
 
 	if (array_size_ == count_)
