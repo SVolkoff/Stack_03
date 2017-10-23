@@ -9,14 +9,14 @@ template <typename T> class stack
 public:
 	stack() noexcept;
 	~stack() noexcept;
-	stack(const stack &); //basic
-	stack<T> & operator=(stack<T> const & other); //basic
+	stack(const stack &); /*no safety*/
+	stack<T> & operator=(stack<T> const & other); /*no safety*/
 	size_t count() const noexcept;
 	void push(T const &); //basic
 	void pop(); //strong
 	T top() const; //strong
-	void print() const;
-	bool isempty() const noexcept;
+	void print() const; /*no safety*/
+	bool isempty() const noexcept; 
 
 private:
 	T * array_;
