@@ -3,20 +3,19 @@
 #include <algorithm>
 #ifndef STACK_HPP
 #define STACK_HPP
-
 template <typename T> class stack
 {
 public:
 	stack() noexcept;
 	~stack() noexcept;
-	stack(const stack &); /*no safety*/
-	stack<T> & operator=(stack<T> const & other); /*no safety*/
+	stack(const stack &); /*strong*/
+	stack<T> & operator=(stack<T> const & other); /*strong*/
 	size_t count() const noexcept;
-	void push(T const &); /*no safety*/
-	void pop(); //strong
-	T top() const; //strong
-	void print() const; /*no safety*/
-	bool isempty() const noexcept; 
+	void push(T const &); /*strong*/
+	void pop(); /*strong*/
+	T top() const; /*strong*/
+	void print() const; /*strong*/
+	bool isempty() const noexcept;
 
 private:
 	T * array_;
@@ -44,10 +43,27 @@ stack<T>::~stack() noexcept
 template<typename T>
 stack<T>::stack(const stack<T>& other)
 {
-	array_size_ = other.array_size_;
-	count_ = other.count_;
-	array_ = new T[array_size_];
-	std::copy(other.array_, other.array_ + other.array_size_, array_);
+	try
+	{
+		size_t tmpsize = other.array_size_;
+		size_t tmpcount = other.count_;
+		T* tmparray_ = new T[tmpsize];
+		std::copy(other.array_, other.array_ + other.array_size_, tmparray_);
+		array_size_ = tmpsize;
+		count_ = tmpcount;
+		if (array_size_==0)
+			delete[] array_;
+		array_ = new T[array_size_];
+		std::copy(tmparray_, tmparray_ + tmpsize, array_);
+	}
+	catch (std::bad_alloc)
+	{
+		 std::cout<< "Allocation failure " << std::endl;
+	}
+	catch (std::exception &err)
+	{
+		 std::cerr << err.what() << std::endl;
+	}
 }
 
 template <typename T>
@@ -66,11 +82,11 @@ void stack<T>::swap(stack<T> & other) noexcept
 }
 
 template<typename T>
-stack<T>& stack<T>::operator= (stack<T> const & other)
+stack<T>& stack<T>::operator= (stack<T> const & other) 
 {
-	if(&other != this)
+	if (&other != this)
 	{
-		stack(other).swap(*this);
+		this(other);
 	}
 	return *this;
 }
@@ -112,7 +128,7 @@ T stack<T>::top() const
 	return array_[count_ - 1];
 }
 template<typename T>
-void stack<T>::push(T const & value) 
+void stack<T>::push(T const & value)
 {
 
 	if (array_size_ == count_)
@@ -122,13 +138,25 @@ void stack<T>::push(T const & value)
 			ar_size = 1;
 		else
 			ar_size = array_size_ * 2;
-		T *ptr = new T[ar_size];
-		std::copy(array_, array_ + count_, ptr);
-		array_size_ = ar_size;
-		delete[] array_;
-		array_ = ptr;
+		try
+		{
+			T *ptr = new T[ar_size];
+			std::copy(array_, array_ + count_, ptr);
+			array_size_ = ar_size;
+			delete[] array_;
+			array_ = ptr;
+		}
+		catch (std::bad_alloc)
+		{
+			std::cout << "Allocation failure " << std::endl;
+		}
+		catch (std::exception &err)
+		{
+			std::cerr << err.what() << std::endl;
+		}
 	}
 	array_[count_] = value;
 	count_++;
 }
+
 #endif 
