@@ -49,10 +49,10 @@ stack<T>::stack(const stack<T>& other)
 		size_t tmpcount = other.count_;
 		T* tmparray_ = new T[tmpsize];
 		std::copy(other.array_, other.array_ + other.array_size_, tmparray_);
+		if (!isempty())
+			delete[] array_;
 		array_size_ = tmpsize;
 		count_ = tmpcount;
-		if (array_size_!=0)
-			delete[] array_;
 		array_ = new T[array_size_];
 		std::copy(tmparray_, tmparray_ + tmpsize, array_);
 	}
