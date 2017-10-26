@@ -51,7 +51,7 @@ stack<T>::stack(const stack<T>& other)
 		std::copy(other.array_, other.array_ + other.array_size_, tmparray_);
 		array_size_ = tmpsize;
 		count_ = tmpcount;
-		if (array_size_==0)
+		if (!isempty())
 			delete[] array_;
 		array_ = new T[array_size_];
 		std::copy(tmparray_, tmparray_ + tmpsize, array_);
@@ -134,7 +134,7 @@ void stack<T>::push(T const & value)
 	if (array_size_ == count_)
 	{
 		size_t ar_size;
-		if (array_size_ == 0)
+		if (isempty())
 			ar_size = 1;
 		else
 			ar_size = array_size_ * 2;
