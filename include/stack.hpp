@@ -54,10 +54,6 @@ stack<T>::stack(const stack<T>& other)
 		array_ = new T[array_size_];
 		std::copy(tmparray_, tmparray_ + tmpsize, array_);
 	}
-	catch (std::bad_alloc)
-	{
-		 std::cout<< "Allocation failure " << std::endl;
-	}
 	catch (std::exception &err)
 	{
 		 std::cerr << err.what() << std::endl;
@@ -143,10 +139,6 @@ void stack<T>::push(T const & value)
 			array_size_ = ar_size;
 			delete[] array_;
 			array_ = ptr;
-		}
-		catch (std::bad_alloc)
-		{
-			std::cout << "Allocation failure " << std::endl;
 		}
 		catch (std::exception &err)
 		{
