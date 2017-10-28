@@ -58,6 +58,10 @@ stack<T>::stack(const stack<T>& other)
 	{
 		 std::cerr << err.what() << std::endl;
 	}
+	catch (char* str)
+	{
+		 std::cout << str << std::endl;
+	}
 }
 
 template <typename T>
